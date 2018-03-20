@@ -20,19 +20,14 @@ class Pokemon
   def self.save(name, type, db)
     # db.execute("IF COL_LENGTH('pokemon','hp') IS NULL BEGIN ALTER TABLE pokemon ADD hp INTEGER END")
     db.execute("INSERT INTO pokemon (name, type) VALUES (?, ?)", name, type)
-    # binding.pry
+    binding.pry
   end
 
 
   def self.find(id, db)
     pokemon = db.execute("SELECT * FROM pokemon WHERE id = ?", id)
     # binding.pry
-    Pokemon.new(id:pokemon[0][0], name:pokemon[0][1], type:pokemon[0][2], db:db, hp:pokemon[0][3])
-  end
-
-  def alter_hp(hp, db)
-    id = self.id
-    db.execute("UPDATE pokemon SET hp = ? WHERE id = ?", hp, id)
+    Pokemon.new(id:pokemon[0][0], name:pokemon[0][1], type:pokemon[0][2], db:db)
   end
 
 end
