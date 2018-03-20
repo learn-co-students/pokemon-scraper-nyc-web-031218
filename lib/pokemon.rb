@@ -2,13 +2,14 @@ require "pry"
 
 class Pokemon
   @@all = []
-  attr_accessor :name, :type, :db, :id
+  attr_accessor :name, :type, :db, :id, :hp
 
-  def initialize(id:, name:, type:, db:)
-    @id = id
-    @name = name
-    @type = type
-    @db = db
+  def initialize(args)
+    @id = args[:id]
+    @name = args[:name]
+    @type = args[:type]
+    @db = args[:db]
+    @hp = args[:hp]
     @@all << self
   end
 
@@ -22,7 +23,13 @@ class Pokemon
 
   def self.find(id, db)
     pokemon = db.execute("SELECT * FROM pokemon WHERE id = ?", id)
-    Pokemon.new(id:pokemon[0][0], name:pokemon[0][1], type:pokemon[0][2], db:db)
+    Pokemon.new(id:pokemon[0][0], name:pokemon[0][1], type:pokemon[0][2], hp:pokemon[0][3], db:db)
+  end
+
+  def alter_hp(new_hp, db)
+    id = self.id
+
+    db.execute("UPDATE pokemon SET hp = ? WHERE id = ?", new_hp, id)
   end
 
 end
