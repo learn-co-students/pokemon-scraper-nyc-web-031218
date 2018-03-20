@@ -1,10 +1,10 @@
 class Pokemon
 
-  attr_accessor :name, :type, :db, :id
+  attr_accessor :name, :type, :db, :id, :hp
   # attr_reader
 
   def initialize(hash)
-    # bindi/ng.pry
+    # binding.pry
     @name = hash[:name]
     @type = hash[:type]
     @db = hash[:db]
@@ -22,13 +22,15 @@ class Pokemon
     # binding.pry
     # new_hash= {}
     poke = db.execute("SELECT * FROM pokemon WHERE id=?", id).flatten
-    new_pokemon = Pokemon.new({id: poke[0], name: poke[1], type: poke[2], db: db})
+    new_pokemon = Pokemon.new({id: poke[0], name: poke[1], type: poke[2], db: db, hp: poke[3]})
   end
 
-  def self.hp_alter(new_hp, db)
+  def alter_hp(new_hp, db)
     # binding.pry
-    db.execute("UPDATE pokemon set hp = 60", new_hp)
-    # binding.pry
+
+    db.execute("UPDATE pokemon set hp = ? WHERE id = ?", new_hp, id)
+
   end
+   # '#{mon}'
 
 end
