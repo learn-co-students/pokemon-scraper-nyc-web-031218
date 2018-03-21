@@ -1,12 +1,18 @@
 class Scraper
   attr_accessor :file, :parsed_file, :all_pokemon, :db
 
-  def initialize(db)
-    self.db = db
-    self.file = File.open("pokemon_index.html")
-    self.parsed_file = Nokogiri::HTML.parse(file)
-    self.all_pokemon = catch_em_all
-  end
+  # def initialize(db)
+  #   self.db = db
+  #   self.file = File.open("pokemon_index.html")
+  #   self.parsed_file = Nokogiri::HTML.parse(file)
+  #   self.all_pokemon = catch_em_all
+  # end
+
+  def initialize(**options)
+    attributes.each do |k,v|
+      instance_variable_set("@#{k}", v) unless v.nil?
+    end
+  end  
 
   def catch_em_all
     self.all_pokemon = parsed_file.css(".infocard-tall")
