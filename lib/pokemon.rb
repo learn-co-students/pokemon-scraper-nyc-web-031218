@@ -3,12 +3,12 @@ require 'pry'
 class Pokemon
   attr_accessor :name, :type, :hp, :id, :db
   # attr_reader
-  def initialize(hash, hp = 60)
+  def initialize(hash)
     @id = hash[:id]
     @name = hash[:name]
     @type = hash[:type]
     @db = hash[:db]
-    @hp = hp
+    @hp = hash[:hp]
   end
 
   def self.save(name, type, db)
